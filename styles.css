@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Sono', sans-serif;
+    background-color:oklch(21.6% 0.006 56.043);
+    color: oklch(98.5% 0.001 106.423);
+    padding: 48px;
+}
+
+.header {
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.fact-form {
+    padding: 16px 40px;
+    background-color: oklch(26.8% 0.007 34.298);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+}
+
+h1 {
+    font-size: 40px;
+    font-family: 'Coiny', system-ui;
+    text-transform: uppercase;
+}
+
+h2 {
+    text-align: left;
+    font-size: 30px;
+    font-family: 'Coiny', system-ui;
+    text-transform: bold;
+}
+
+button {
+    background-color: oklch(71.2% 0.194 13.428);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.fact-item {
+    background-color: oklch(26.8% 0.007 34.298);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    padding: 16px 30px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
+
+.vote-buttons {
+    margin-left: auto;
+}
+
+.fact-tag {
+    background-color: oklch(81% 0.117 11.638);
+    border-radius: 5px;
+    padding: 3px 8px;
+    font-size: 16px;
+    margin-left: 10px;
+    font-family: 'Coiny', sans-serif;
+    text-transform: uppercase;
+}
