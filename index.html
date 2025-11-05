@@ -13,82 +13,86 @@
     <title>Fact Share</title>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <img src="logo.png" alt="Fact Share Logo" width="70" style ="border-radius: 50%;">
-            <h1>Fact Share</h1>
-        </div>
-        <button class="share-fact-btn">Share a fact</button>
-    </header>
-    <br>
-
-    <form class="fact-form">
-        <input type="text" placeholder="Share a fact..." style="width: 400px;">
-        <span> 200 </span>
-        <input type="text" placeholder="Link a Source..." style="width: 200px;">
-        <select>
-            <option value="" disabled selected>Choose category:</option>
-            <option value="economics">Economics</option>
-            <option value="history">History</option>
-            <option value="nature">Nature</option>
-            <option value="science">Science</option>
-            <option value="UK">UK</option>
-        </select>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="logo.png" alt="Fact Share Logo" width="70" style ="border-radius: 50%;">
+                <h1>Fact Share</h1>
+            </div>
+            <button class="btn">Share a fact</button>
+        </header>
         <br>
-        <button type="submit">Submit</button>
-    </form>
-    <h2>Interesting Facts</h2>
-    <main class="main">
-        <aside>
-            <ul>
-                <li>
-                    <button>All</button>
-                </li>
-                <li>
-                    <button>Science</button>
-                </li>
-                <li>
-                    <button>Nature</button>
-                </li>
-            </ul>
-        </aside>
-        <section>
-            <ul>
-                <li class="fact-item">
-                    <p>
-                        💡 The Eiffel Tower is 330m tall
-                        <a href="https://en.wikipedia.org/wiki/Eiffel_Tower" target="_blank">(Source)</a>
-                    </p>
-                    <span class="fact-tag">#science#</span>
-                    <div class="vote-buttons">
-                        <button>👍 24</button>
-                        <button>👎 3</button
-                    </div>
-                </li>
-                <li class="fact-item">
-                    <p>
-                        💡 Bananas are berries, but strawberries are not (strawberries are <i>aggregate fruits</i>).
-                        <a href="https://en.wikipedia.org/wiki/berries" target="_blank">(Source)</a>
-                    </p>
-                    <span class="fact-tag">#nature#</span>
-                    <div class="vote-buttons">
-                        <button>👍 24</button>
-                        <button>👎 3</button
-                    </div>
-                </li>
-                <li class="fact-item">
-                    <p>
-                        💡 Octopuses have three hearts 
-                        <a href="https://en.wikipedia.org/wiki/Octopuses" target="_blank">(Source)</a>
-                    </p>
-                    <span class="fact-tag">#nature#</span>
-                    <div class="vote-buttons">
-                        <button>👍 24</button>
-                        <button>👎 3</button
-                    </div>
-                </li>
-            </ul>
-        </section>
-    </main>
+
+        <form class="fact-form">
+            <input type="text" placeholder="Share a fact...">
+            <span> 200 </span>
+            <input type="text" placeholder="Link a Source...">
+            <select>
+                <option value="" disabled selected>Choose category:</option>
+                <option value="economics">Economics</option>
+                <option value="history">History</option>
+                <option value="nature">Nature</option>
+                <option value="science">Science</option>
+                <option value="UK">UK</option>
+            </select>
+            <button class='btn' type="submit">Submit</button>
+        </form>
+        <h2>Interesting Facts</h2>
+        <main class="main">
+            <aside>
+                <ul>
+                    <li>
+                        <button class="btn btn-topic">All</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-topic topic-science">Science</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-topic topic-nature">Nature</button>
+                    </li>
+                </ul>
+            </aside>
+            <section>
+                <ul>
+                    <li class="fact-item">
+                        <p>
+                            💡 The Eiffel Tower is 330m tall
+                            <a class='source' href="https://en.wikipedia.org/wiki/Eiffel_Tower" target="_blank">(Source)</a>
+                            <span class="fact-tag topic-science">#science#</span>
+                        </p>
+                        
+                        <div class="vote-buttons">
+                            <button>👍 24</button>
+                            <button>👎 3</button
+                        </div>
+                    </li>
+                    <li class="fact-item">
+                        <p>
+                            💡 Bananas are berries, but strawberries are not (strawberries are <i>aggregate fruits</i>).
+                            <a class='source' href="https://en.wikipedia.org/wiki/berries" target="_blank">(Source)</a>
+                            <span class="fact-tag topic-nature">#nature#</span>
+                        </p>
+                        
+                        <div class="vote-buttons">
+                            <button>👍 24</button>
+                            <button>👎 3</button
+                        </div>
+                    </li>
+                    <li class="fact-item">
+                        <p>
+                            💡 Octopuses have three hearts 
+                            <a class='source' href="https://en.wikipedia.org/wiki/Octopuses" target="_blank">(Source)</a>
+                            <span class="fact-tag topic-nature">#nature#</span>
+                        </p>
+                        
+                        <div class="vote-buttons">
+                            <button>👍 24</button>
+                            <button>👎 3</button
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </div>
 </body>
  
