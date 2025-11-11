@@ -1,0 +1,222 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Sono", sans-serif;
+  background-color: oklch(21.6% 0.006 56.043);
+  color: oklch(98.5% 0.001 106.423);
+  padding: 48px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo img {
+  border-radius: 50%;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+}
+
+@media (max-width: 1000px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fact-form {
+  padding: 16px 40px;
+  background-color: oklch(26.8% 0.007 34.298);
+  border-radius: 16px;;
+
+  display:flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fact-form input, .fact-form select{
+    padding: 16px;
+    border-radius: 100px;
+    border: none;
+    background-color: oklch(44.4% 0.011 73.639);
+    color: inherit;
+    font-family: inherit;
+    width: 200px;
+}
+
+.fact-form input:first-child{
+    flex-grow:1;
+} 
+   
+
+.fact-form input::placeholder{
+    color: oklch(85% 0.005 56.423);
+}
+
+.fact-form span{
+    font-weight: 600;
+    margin-right: 18px;
+}
+
+@media (max-width: 1000px){
+    .body {
+        padding: 24px;
+    }
+    .fact-form {
+        flex-direction:column;
+        align-items: stretch;
+    }
+
+    .fact-form input, .fact-form select{
+        width:auto;
+    }
+}
+
+h1 {
+  font-size: 40px;
+  font-family: "Coiny", system-ui;
+  text-transform: uppercase;
+}
+
+h2 {
+  text-align: left;
+  font-size: 30px;
+  font-family: "Coiny", system-ui;
+  text-transform: bold;
+}
+
+ul {
+  list-style-type: none;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.btn {
+  font-family: "Coiny", sans-serif;
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    135deg,
+    oklch(81% 0.117 11.638),
+    oklch(64.5% 0.246 16.439)
+  );
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.btn:hover {
+  transform: scale(110%) rotate(-2deg);
+  transition: 0.3s;
+}
+
+.btn-topic {
+  width: 100%;
+}
+
+.fact-item {
+  background-color: oklch(26.8% 0.007 34.298);
+  border-radius: 16px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  padding: 16px 30px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+    .fact-item {
+        flex-direction:column;
+    }
+}
+.fact-tag {
+  
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 16px;
+  margin-left: 10px;
+  font-family: "Coiny", sans-serif;
+  text-transform: uppercase;
+}
+
+.topic-science {
+  background-color: #af189bff;
+  background-image: None;
+}
+
+.topic-nature {
+  background-color: #6ee674ff;
+  background-image: None;
+}
+
+.vote-buttons {
+  margin-left: auto;
+  flex-shrink:0;
+
+  display:flex;
+  gap: 8px;
+}
+
+.vote-buttons button {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color:white;
+  background-color: oklch(44.4% 0.011 73.639);
+  border-radius:100px;
+  border: none;
+}
+
+.vote-buttons button:hover {
+  background-color: oklch(64.5% 0.246 16.439);
+  transition: 0.3s;
+}
+
+.source:link,
+.source:visited {
+  color: oklch(87% 0.065 274.039);
+  text-decoration: none;
+  margin-left: 12px;
+  transition: 0.3s;
+}
+
+.source:hover,
+.source:active {
+  color: oklch(67.3% 0.182 276.935);
+}

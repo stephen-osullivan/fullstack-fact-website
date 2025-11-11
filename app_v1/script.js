@@ -60,16 +60,16 @@ function createFactList(factList) {
   );
 };
 
+KEY = "sb_publishable_ouPNKNRwtvX0M9DVPbVYsg_ZxL57ebq";
+SUPABASE_URL = "https://nwfhxbyljklxfqidrxth.supabase.co/rest/v1/facts";
 
 // load data from Supabase database and create DOM elements for each fact
 async function loadFacts() {
   // call superbase RESTful API to get the data
-  const res = await fetch("https://nwfhxbyljklxfqidrxth.supabase.co/rest/v1/facts", {
+  const res = await fetch(SUPABASE_URL, {
     headers : {
-      apikey: 
-        "sb_publishable_ouPNKNRwtvX0M9DVPbVYsg_ZxL57ebq",
-      authorization :
-        "Bearer sb_publishable_ouPNKNRwtvX0M9DVPbVYsg_ZxL57ebq",
+      apikey: KEY,
+      authorization :`Bearer ${KEY}`,
     }
   });
   // convert to json format
