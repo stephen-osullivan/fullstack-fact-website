@@ -11,3 +11,7 @@ React app created by running following command in project root: $ npx create-rea
 # Project Layout
 
 * app_v1 contains a version of the app using vanila js without React
+
+# Commands
+
+* run development server app: $ npm run start

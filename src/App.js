@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./styles.css"
 
 const CATEGORIES = [
@@ -9,7 +10,7 @@ const CATEGORIES = [
   { name: "health", color: "#14b8a6" },
   { name: "history", color: "#f97316" },
   { name: "news", color: "#8b5cf6" },
-];
+].sort((a, b) => a.name.localeCompare(b.name));
 
 const initialFacts = [
   {
@@ -17,9 +18,9 @@ const initialFacts = [
     text: "React is being developed by Meta (formerly facebook)",
     source: "https://opensource.fb.com/",
     category: "technology",
-    votesInteresting: 24,
-    votesMindblowing: 9,
-    votesFalse: 4,
+    upvotes: 24,
+    mindsBlown: 9,
+    downvotes: 4,
     createdIn: 2021,
   },
   {
@@ -28,9 +29,9 @@ const initialFacts = [
     source:
       "https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids",
     category: "society",
-    votesInteresting: 11,
-    votesMindblowing: 2,
-    votesFalse: 0,
+    upvotes: 11,
+    mindsBlown: 2,
+    downvotes: 0,
     createdIn: 2019,
   },
   {
@@ -38,103 +39,151 @@ const initialFacts = [
     text: "Lisbon is the capital of Portugal",
     source: "https://en.wikipedia.org/wiki/Lisbon",
     category: "society",
-    votesInteresting: 8,
-    votesMindblowing: 3,
-    votesFalse: 1,
+    upvotes: 8,
+    mindsBlown: 3,
+    downvotes: 1,
     createdIn: 2015,
   },
 ];
 
-// LINK TO APP SAMPLE DATA: https://docs.google.com/spreadsheets/d/1eeldcA_OwP4DHYEvjG0kDe0cRys-cDPhc_E9P9G1e3I/edit#gid=0
-
-// 👍 🤯 ⛔️
-
-
 function App() {
+
+  const [showForm, setShowForm] = useState(false);
+  const [categoryChoice, setCategoryChoice] = useState("all");
+
   return (
     <>
-    <HeaderComponent />
-    <NewFactForm />
+    <HeaderComponent showForm={showForm} setShowForm={setShowForm}/>
+    {showForm ? <NewFactForm /> : null}
     <br />
     <main className="main">  
-      <CategoryFilter />
-      <FactList />
+      <CategoryFilter 
+        categoryChoice={categoryChoice} 
+        setCategoryChoice={setCategoryChoice}
+      />
+      <FactList categoryChoice = {categoryChoice}/>
     </main>
     </>
   );
 }
 
-function HeaderComponent() {
+function HeaderComponent({ showForm, setShowForm }) {
   return (
     <header className="header">
         <div className="logo">
             <img src="logo.png" alt="Fact Share Logo" width="70"/>
             <h1>Fact Share</h1>
         </div>
-        <button className="btn btn-open-form">Share a fact</button>
+        <button 
+          className="btn btn-open-form" 
+          onClick={() => setShowForm(!showForm)}
+        >
+          Share a fact
+        </button>
     </header>
-  )
+  );
 }
 
 function NewFactForm() {
+  const categories = CATEGORIES;
   return (
     <form className="fact-form">
         <input type="text" placeholder="Share a fact with the world..." />
         <input type="text" placeholder="URL to supporting source..." />
         <select>
             <option value="">Choose category:</option>
-            <option value="science">Science</option>
-            <option value="nature">Nature</option>
-            <option value="history">History</option>
-            <option value="technology">Technology</option>
-            <option value="society">Society</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="health">Health</option>
+            {categories.map((c) => (
+              <option key="{c.name}-option" value={c.name}>{c.name}</option>
+            ))}
         </select>
         <button className="btn btn-large">Post fact</button>
     </form>
-  )
+  );
 }
 
-function CategoryFilter() {
+function CategoryFilter({categoryChoice, setCategoryChoice}) {
+
+  const categories = CATEGORIES;
+
+  function displayCategoryButton(category) {
+    return (
+      <>
+      <li key ={category.name}>
+        <button 
+          className="btn btn-topic" 
+          style={{backgroundColor : category.color}}
+          onClick={() => setCategoryChoice(categoryChoice !== category.name ? category.name : "all")}
+        >
+          {category.name}
+        </button>
+      </li>
+      </>
+    );
+  }
+
   return (
     <aside>
-        <ul>
-            <li>
-                <button className="btn btn-topic">All</button>
-            </li>
-            <li>
-                <button className="btn btn-topic topic-science">Science</button>
-            </li>
-            <li>
-                <button className="btn btn-topic topic-nature">Nature</button>
-            </li>
-        </ul>
+      <p>Category Filter</p>
+      <br></br>
+      <ul>
+        <li>
+          <button 
+            className="btn btn-all" 
+            onClick={()=>setCategoryChoice("all")}
+          >
+            All
+          </button>
+        </li>
+        {categories.map((c) => (displayCategoryButton(c)))}
+      </ul>
     </aside>
   )
 }
 
-function displayFact(fact) {
-  let categoryColor = CATEGORIES.find((cat) => cat.name === fact.category).color;
-  return(
-    <li className="fact-item" key={fact.id}>
-        <p>{fact.text}</p>
-        <span className="fact-tag" style={{backgroundColor : categoryColor}}>{fact.category}</span>
-    </li>
-  )
+
+function getCategoryColor(categoryName) {
+  const category = CATEGORIES.find(
+    (cat) => cat.name.toLowerCase() === categoryName.toLowerCase()
+  );
+  return category ? category.color : "oklch(81% 0.117 11.638)"; // default if not found
 }
 
-function FactList() {
-  const facts = initialFacts;
+function FactList( {categoryChoice} ) {
+  let facts = initialFacts;
+
+  facts = categoryChoice === "all" ? facts : facts.filter(fact => fact.category.toLowerCase() === categoryChoice);
 
   return (
     <section>
-        <p> Fact List </p>
+        <p> Fact List ({facts.length} facts)</p>
+        <br></br>
         <ul className="fact-list">
-          {facts.map((fact) => (displayFact(fact)))}
+          {facts.map((fact) => (
+            <Fact key={fact.id} fact={fact}/>
+          ))}
         </ul>
     </section>
   )
 }
+
+function Fact({fact}) {
+  let categoryColor = getCategoryColor(fact.category);
+  return(
+    <li className="fact-item" key={fact.id}>
+        <p>
+          {fact.text}
+          <a className="source" href={fact.source} target="_blank" rel="noreferrer">({fact.source})</a>
+          <span className="fact-tag" style={{backgroundColor : categoryColor}}>{fact.category}</span>
+        </p>
+        
+        <div className="vote-buttons">
+            <button>👍 {fact.upvotes}</button>
+            <button>👎 {fact.downvotes}</button>
+            <button>🫨 {fact.mindsBlown}</button>
+        </div>
+    </li>
+  )
+}
+
 
 export default App;

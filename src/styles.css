@@ -15,7 +15,7 @@ body {
   display: none !important;
 }
 
-.container {
+#root {
   max-width: 1500px;
   margin: 0 auto;
 }
@@ -144,7 +144,12 @@ button:hover{
   transition: 0.3s;
 }
 
+.btn-all {
+  width: 100%;
+}
+
 .btn-topic {
+  background-image: None;
   width: 100%;
 }
 
