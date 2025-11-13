@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import supabase from "./supabase.js";
 import "./styles.css"
 
 const CATEGORIES = [
@@ -48,7 +49,24 @@ const initialFacts = [
 
 function App() {
 
+  // load facts from supabase first time component loads
+  useEffect(function() {
+    async function getFacts() {
+      let { data: facts, error } = await supabase
+        .from('facts')
+        .select('*')
+        .order('upvotes', { ascending: false })
+        .limit(1000);
+      console.log(facts);
+      if (error) console.log("Error fetching facts:", error);
+      else console.log("Facts fetched successfully:", facts);
+    }
+    let initialFacts=getFacts();
+  }
+  , []); // empty dependency array -> runs once at the beginning
+
   const [showForm, setShowForm] = useState(false);
+  const [facts, setFacts] = useState(initialFacts);
   const [categoryChoice, setCategoryChoice] = useState("all");
 
   return (
@@ -61,7 +79,7 @@ function App() {
         categoryChoice={categoryChoice} 
         setCategoryChoice={setCategoryChoice}
       />
-      <FactList categoryChoice = {categoryChoice}/>
+      <FactList facts= {facts} categoryChoice = {categoryChoice}/>
     </main>
     </>
   );
@@ -85,15 +103,69 @@ function HeaderComponent({ showForm, setShowForm }) {
 }
 
 function NewFactForm() {
+  const [text, setText] = useState("");
+  const [source, setSource] = useState("");
+  const [category, setCategory] = useState("");
+  const textLength = text.length;
+
   const categories = CATEGORIES;
+
+  function handleSubmit(e) {
+    // Prevent the browser from reloading the page
+    e.preventDefault();
+    console.log({text, source, category});
+
+    // validate data
+    if (textLength > 200) {
+      alert("Fact is too long! Please keep it under 200 characters.");
+      return;
+    }
+    else if (!(text && source && category)) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    else {
+      // create a new fact object
+      const newFact = {
+        text,
+        source,
+        category,
+        upvotes: 0,
+        downvotes: 0,
+        mindsBlown: 0,
+        createdIn: new Date().getFullYear(),
+      };
+      console.log(newFact);
+      console.log(process.env.SUPABASE_KEY);
+      // add the new fact to the UI
+
+      // clear the form
+      setText("");
+      setSource("");
+      setCategory("");
+    }
+  }
+
   return (
-    <form className="fact-form">
-        <input type="text" placeholder="Share a fact with the world..." />
-        <input type="text" placeholder="URL to supporting source..." />
-        <select>
+    <form className="fact-form" onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          placeholder="Share a fact with the world..."
+          value ={text} 
+          onChange={(e) => setText(e.target.value)}
+        />
+        <span>{200 - textLength} characters remaining</span>
+        <input 
+          type="text" 
+          placeholder="URL to supporting source..."
+          value ={source} 
+          onChange={(e) => setSource(e.target.value)} 
+        />
+
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="">Choose category:</option>
             {categories.map((c) => (
-              <option key="{c.name}-option" value={c.name}>{c.name}</option>
+              <option key={`${c.name}-option`} value={c.name}>{c.name}</option>
             ))}
         </select>
         <button className="btn btn-large">Post fact</button>
@@ -107,8 +179,7 @@ function CategoryFilter({categoryChoice, setCategoryChoice}) {
 
   function displayCategoryButton(category) {
     return (
-      <>
-      <li key ={category.name}>
+      <li key ={`${category.name}-button`}>
         <button 
           className="btn btn-topic" 
           style={{backgroundColor : category.color}}
@@ -117,7 +188,6 @@ function CategoryFilter({categoryChoice, setCategoryChoice}) {
           {category.name}
         </button>
       </li>
-      </>
     );
   }
 
@@ -126,7 +196,7 @@ function CategoryFilter({categoryChoice, setCategoryChoice}) {
       <p>Category Filter</p>
       <br></br>
       <ul>
-        <li>
+        <li key='all-button'>
           <button 
             className="btn btn-all" 
             onClick={()=>setCategoryChoice("all")}
@@ -148,10 +218,11 @@ function getCategoryColor(categoryName) {
   return category ? category.color : "oklch(81% 0.117 11.638)"; // default if not found
 }
 
-function FactList( {categoryChoice} ) {
-  let facts = initialFacts;
+function FactList( {facts, categoryChoice} ) {
 
-  facts = categoryChoice === "all" ? facts : facts.filter(fact => fact.category.toLowerCase() === categoryChoice);
+  facts = categoryChoice === "all" ? 
+    facts : 
+    facts.filter(fact => fact.category.toLowerCase() === categoryChoice.toLowerCase());
 
   return (
     <section>
