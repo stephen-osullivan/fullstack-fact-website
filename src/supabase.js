@@ -1,8 +1,13 @@
-
+// keys imported from .env.local
 import { createClient } from '@supabase/supabase-js';
-const supabaseUrl = 'https://nwfhxbyljklxfqidrxth.supabase.co';
-//const supabaseKey = process.env.SUPABASE_KEY
-const supabaseKey = "sb_publishable_ouPNKNRwtvX0M9DVPbVYsg_ZxL57ebq";
+
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing Supabase environment variables');
+}
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default supabase;

@@ -54,6 +54,20 @@ p::first-letter {
   }
 }
 
+.login-form {
+  padding: 16px 40px;
+  background-color: oklch(26.8% 0.007 34.298);
+  border-radius: 16px;;
+
+  display:flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.login-form input:first-child{
+    flex-grow:1;
+}
+
 .fact-form {
   padding: 16px 40px;
   background-color: oklch(26.8% 0.007 34.298);
